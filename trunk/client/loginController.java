@@ -30,11 +30,10 @@ public class loginController {
     private static Socket mConnection;
 
     public static void main(String args[]) {
-    System.out.println("SocketClient initialized");
+        System.out.println("SocketClient initialized");
     
-     l.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-     l.setVisible(true);
-
+        l.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        l.setVisible(true);
     }
     
 

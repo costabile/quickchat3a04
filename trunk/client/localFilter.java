@@ -4,7 +4,6 @@
  */
 package client;
 
-import java.lang.String;
 
 /**
  *
@@ -13,26 +12,30 @@ import java.lang.String;
 public class localFilter {
 
     private static final int DEFAULT_FILTER_LIST_LENGTH = 7;
+
     public localFilter() {
 
+    }
+
+    public static void main(String args[]) {
+        new localFilter();
     }
 
     public String filterMsg(String msg) {
         //TODO: deactivate if user has turned filter off?
         String filteredMsg = msg;
         String lowCaseMsg = msg.toLowerCase();
-        boolean isWordFiltered;
         int i,j;
         for (i=0; i<getDefaultFilterListLength(); i++) {
             if (lowCaseMsg.contains(getDefaultFilterWord(i))) {
                 String replacementStr = "";
                 for (j=0; j<getDefaultFilterWord(i).length(); j++) {
-                    //fill replacementStr with stars
+                    replacementStr = replacementStr + "*";
                 }
-                filteredMsg.replace(getDefaultFilterWord(i), "");
-                //
+                filteredMsg = filteredMsg.replaceAll("(?i)" + getDefaultFilterWord(i), replacementStr);     //(?i) flag causes case insensitivity
             }
         }
+        return filteredMsg;
     }
 
     private int getDefaultFilterListLength() {
