@@ -11,8 +11,9 @@ public class ClientConnection implements Runnable {
     private String TimeStamp;
     private int ID;
     private boolean valid; 
+    private boolean CON_ALIVE; 
 
-    private String user;
+    public String user;
 
     // Process msg once recieved otherwise wait for msg
     private boolean busy;
@@ -27,6 +28,7 @@ public class ClientConnection implements Runnable {
         
         // The user has not been authenticated
         this.valid = false;
+        this.CON_ALIVE = true;
         try {
           // Note the ordering
           out = new ObjectOutputStream(mConnection.getOutputStream());
@@ -40,7 +42,7 @@ public class ClientConnection implements Runnable {
 
 
     public void run()  {
-            while (true) {
+            while (CON_ALIVE) {
                 NetworkMessage nw = recieveNetworkMsg();
                 if (nw != null) processMsg(nw);
             }
@@ -56,6 +58,10 @@ public class ClientConnection implements Runnable {
                     globalIM(nw); 
                     break;
                 case PIM:
+                    privateIM(nw); 
+                    break;
+                case USER_LIST:
+                    userList(nw);
                     break;
                 default: break;
             }
@@ -74,6 +80,7 @@ public class ClientConnection implements Runnable {
             NetworkMessage nw = (NetworkMessage)in.readObject();
             return nw; 
         } catch (Exception e) {
+            killConnection();
             return null;
         }
     }
@@ -81,8 +88,15 @@ public class ClientConnection implements Runnable {
     private void authenticateClient(NetworkMessage nw) {
        if (nw.getData()[1].equals(Server.password)) {
            valid = true;
-           user = (String)nw.getData()[0];
+           user = nw.getData()[0];
            System.out.println(String.format("%s has been authenticated.",user));
+
+            // Let everyone know about the new user 
+            for (ClientConnection c : Server.connections) {
+                if (c != this) 
+                c.sendNetworkMsg(new NetworkMessage(NetworkMessage.NetworkAction.USER_SIGN_ON, new String[] {user}));
+            }
+
        } else {
            valid = false;
            try {
@@ -92,9 +106,13 @@ public class ClientConnection implements Runnable {
        }
     }
 
-    private void killConnection() throws Exception {
-        mConnection.close();
-        System.out.println("connection lost.");
+    private void killConnection()  {
+        CON_ALIVE = false;
+        try { 
+            Server.connections.remove(Server.connections.indexOf(this));
+            mConnection.close(); 
+            } catch (Exception e) {}
+        System.out.println(user + " connection lost.");
     }
 
     private void globalIM(NetworkMessage nw) {
@@ -105,5 +123,25 @@ public class ClientConnection implements Runnable {
            }
        }
     }
+
+    private void privateIM(NetworkMessage nw) {
+       for (ClientConnection c : Server.connections) {
+           // Don't IM ourselves
+           if (c.user.equals(nw.getData()[2])) {
+               c.sendNetworkMsg(nw);
+           }
+       }
+    }
+
+    private void userList(NetworkMessage nw) {
+        String[] list = new String[Server.connections.size()];
+        int i = 0;
+        for (ClientConnection c : Server.connections) {
+               list[i] = c.user;
+               i++;
+           }
+        sendNetworkMsg(new NetworkMessage(NetworkMessage.NetworkAction.USER_LIST,list)); 
+    }
+
 
 }
