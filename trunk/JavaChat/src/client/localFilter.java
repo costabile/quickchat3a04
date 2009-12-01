@@ -1,0 +1,64 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package client;
+
+import java.lang.String;
+
+/**
+ *
+ * @author Jason
+ */
+public class localFilter {
+
+    private static final int DEFAULT_FILTER_LIST_LENGTH = 7;
+    public localFilter() {
+
+    }
+
+    public String filterMsg(String msg) {
+        //TODO: deactivate if user has turned filter off?
+        String filteredMsg = msg;
+        String lowCaseMsg = msg.toLowerCase();
+        boolean isWordFiltered;
+        int i,j;
+        for (i=0; i<getDefaultFilterListLength(); i++) {
+            if (lowCaseMsg.contains(getDefaultFilterWord(i))) {
+                String replacementStr = "";
+                for (j=0; j<getDefaultFilterWord(i).length(); j++) {
+                    //fill replacementStr with stars
+                }
+                filteredMsg.replace(getDefaultFilterWord(i), "");
+                //
+            }
+        }
+    }
+
+    private int getDefaultFilterListLength() {
+        return DEFAULT_FILTER_LIST_LENGTH;  //TODO: determine actual length
+    }
+
+    private String getDefaultFilterWord(int i) {
+        switch(i) {
+            case 0:
+                return "ass";
+            case 1:
+                return "fuck";
+            case 2:
+                return "shit";
+            case 3:
+                return "bitch";
+            case 4:
+                return "nigger";
+            case 5:
+                return "cunt";
+            case 6:
+                return "faggot";
+            default:
+                break;
+        }
+        return "";
+    }
+
+}
