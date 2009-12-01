@@ -24,6 +24,7 @@ public class localFilter {
     public String filterMsg(String msg) {
         //TODO: deactivate if user has turned filter off?
         String filteredMsg = msg;
+        //if filter is on..
         String lowCaseMsg = msg.toLowerCase();
         int i,j;
         for (i=0; i<getDefaultFilterListLength(); i++) {
@@ -35,6 +36,7 @@ public class localFilter {
                 filteredMsg = filteredMsg.replaceAll("(?i)" + getDefaultFilterWord(i), replacementStr);     //(?i) flag causes case insensitivity
             }
         }
+        //endif
         return filteredMsg;
     }
 
