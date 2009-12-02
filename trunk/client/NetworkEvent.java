@@ -10,10 +10,12 @@ import java.awt.*;
 
 public class NetworkEvent {
     
-    public static void msgRecieved(String usr, String msg) {
+    public static void msgRecieved(String usr, String msg/*, int colour*/) {
 //        System.out.println("");
 //        System.out.println(msg);
-          mainview.lobbyWrite(usr + ": " + msg);
+          //int colour =
+          String message = usr + ": " + msg;
+          mainview.lobbyWrite(message);
     }
 
     public static void pmsgRecieved(String usr, String msg) {
@@ -24,7 +26,7 @@ public class NetworkEvent {
 
     public static void signOn(String user) {
         System.out.println("");
-        mainview.lobbyWrite(user + " : connected");
+        mainview.lobbyWrite("-> " + user + " has connected.");
     }
 
     public static void authenticated(boolean auth) {

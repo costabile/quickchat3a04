@@ -71,7 +71,7 @@ public class mainview extends javax.swing.JFrame {
         sendBtn = new javax.swing.JButton();
         scrollPane1 = new java.awt.ScrollPane();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList();
+        userList = new javax.swing.JList();
         label1 = new java.awt.Label();
         jLabel1 = new javax.swing.JLabel();
         scrollPane2 = new java.awt.ScrollPane();
@@ -87,6 +87,7 @@ public class mainview extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         stateLabel = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addKeyListener(new java.awt.event.KeyAdapter() {
@@ -130,13 +131,13 @@ public class mainview extends javax.swing.JFrame {
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
-        jList1.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { };
+        userList.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Null" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
-        jList1.setName("jList1"); // NOI18N
-        jScrollPane1.setViewportView(jList1);
+        userList.setName("userList"); // NOI18N
+        jScrollPane1.setViewportView(userList);
 
         scrollPane1.add(jScrollPane1);
 
@@ -190,6 +191,14 @@ public class mainview extends javax.swing.JFrame {
         jLabel3.setText("Simple layout test");
         jLabel3.setName("jLabel3"); // NOI18N
 
+        jButton1.setText("Settings");
+        jButton1.setName("jButton1"); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -198,35 +207,37 @@ public class mainview extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(entry)
-                            .addComponent(chatView, javax.swing.GroupLayout.DEFAULT_SIZE, 709, Short.MAX_VALUE))
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(stateLabel))
+                    .addComponent(jLabel3)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(entry)
+                                .addComponent(chatView, javax.swing.GroupLayout.DEFAULT_SIZE, 709, Short.MAX_VALUE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(authButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(label3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(label5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(label4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGap(18, 18, 18)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(loginName)
+                                        .addComponent(loginIP)
+                                        .addComponent(loginPort)
+                                        .addComponent(loginPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton1)
                             .addComponent(sendBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
                             .addComponent(scrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
                             .addComponent(scrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
                             .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1)))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(authButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(label3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(label5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(label4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(18, 18, 18)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(loginName)
-                                .addComponent(loginIP)
-                                .addComponent(loginPort)
-                                .addComponent(loginPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(stateLabel))
-                    .addComponent(jLabel3))
+                            .addComponent(jLabel1))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -255,7 +266,9 @@ public class mainview extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(loginIP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(loginIP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton1)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
@@ -332,6 +345,10 @@ public class mainview extends javax.swing.JFrame {
         joinLobby();
         authButton.setEnabled(false);
         sendBtn.setEnabled(true);
+        loginIP.setEnabled(false);
+        loginName.setEnabled(false);
+        loginPassword.setEnabled(false);
+        loginPort.setEnabled(false);
         }
         catch(Exception e) {
         System.out.print("Error");
@@ -346,7 +363,7 @@ public class mainview extends javax.swing.JFrame {
     }
     }
 
-    public static void disconnect(){
+    public void disconnect(){
         mConnection = null;
         try{
             main.interrupt();
@@ -354,7 +371,11 @@ public class mainview extends javax.swing.JFrame {
             stateLabel.setForeground(Color.red);
             authButton.setEnabled(true);
             consoleWrite("Disconnected from server!");
-            sendBtn.setEnabled(false);
+            sendBtn.setEnabled(true);
+            loginIP.setEnabled(true);
+            loginName.setEnabled(true);
+            loginPassword.setEnabled(true);
+            loginPort.setEnabled(true);
         }
         catch(Exception e) {
         System.out.print("Error");
@@ -382,6 +403,10 @@ public class mainview extends javax.swing.JFrame {
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
        
     }//GEN-LAST:event_formKeyPressed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        settingsWindow.settings();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
 
@@ -488,12 +513,13 @@ public class mainview extends javax.swing.JFrame {
 
     public static void lobbyWrite(String a) {
         String text = a;
-        lobbyArea.append(text + newline);
+        //pane.append(Color.red, String.valueOf(n)+' ');
+        lobbyArea.append(/*Color.red , */String.valueOf(text) + "/n");
 
     }
 
     public static void usrlistUpdate(String[] list) {
-        jList1.setListData(list);
+        userList.setListData(list);
     }
 
     protected static JComponent makeTextPanel(String text) {
@@ -507,10 +533,10 @@ public class mainview extends javax.swing.JFrame {
     private static javax.swing.JButton authButton;
     private static javax.swing.JTabbedPane chatView;
     private javax.swing.JTextField entry;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private static javax.swing.JList jList1;
     private javax.swing.JScrollPane jScrollPane1;
     private java.awt.Label label1;
     private java.awt.Label label2;
@@ -525,6 +551,7 @@ public class mainview extends javax.swing.JFrame {
     private java.awt.ScrollPane scrollPane2;
     private static javax.swing.JButton sendBtn;
     private static javax.swing.JLabel stateLabel;
+    private static javax.swing.JList userList;
     // End of variables declaration//GEN-END:variables
 
 }

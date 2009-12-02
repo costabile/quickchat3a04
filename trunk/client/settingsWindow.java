@@ -43,6 +43,8 @@ public class settingsWindow extends javax.swing.JFrame {
         rb_swearFilterOff = new javax.swing.JRadioButton();
         btn_cancel = new javax.swing.JButton();
         btn_ok = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jColorChooser1 = new javax.swing.JColorChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("QuickChat Settings");
@@ -75,39 +77,55 @@ public class settingsWindow extends javax.swing.JFrame {
             }
         });
 
+        jLabel2.setText("Font Colour:");
+        jLabel2.setName("jLabel2"); // NOI18N
+
+        jColorChooser1.setName("jColorChooser1"); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(rb_swearFilterOff)
-                    .addComponent(rb_swearFilterOn))
-                .addContainerGap(238, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(260, Short.MAX_VALUE)
+                .addContainerGap(321, Short.MAX_VALUE)
                 .addComponent(btn_ok)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_cancel)
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(rb_swearFilterOn)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(rb_swearFilterOff)
+                .addContainerGap(276, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addContainerGap(379, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jColorChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(29, 29, 29)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(rb_swearFilterOn))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(rb_swearFilterOff)
-                .addGap(18, 18, 18)
+                    .addComponent(rb_swearFilterOn)
+                    .addComponent(rb_swearFilterOff))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jColorChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_cancel)
                     .addComponent(btn_ok))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -125,13 +143,13 @@ public class settingsWindow extends javax.swing.JFrame {
         if (rb_swearFilterOn.isSelected()) settings.setSwearFilterOn(true);
         else if (rb_swearFilterOff.isSelected()) settings.setSwearFilterOn(false);
 
+        //colour chooser
+        
         dispose();
     }//GEN-LAST:event_btn_okActionPerformed
 
-    /**
-    * @param args the command line arguments
-    */
-    public static void main(String args[]) {
+    
+    public static void settings() {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new settingsWindow().setVisible(true);
@@ -142,7 +160,9 @@ public class settingsWindow extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_cancel;
     private javax.swing.JButton btn_ok;
+    private javax.swing.JColorChooser jColorChooser1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JRadioButton rb_swearFilterOff;
     private javax.swing.JRadioButton rb_swearFilterOn;
     private javax.swing.ButtonGroup rbgroup_swearFilter;
