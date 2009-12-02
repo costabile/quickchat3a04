@@ -87,6 +87,11 @@ public class mainview extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
 
         entry.setName("entry"); // NOI18N
         entry.addActionListener(new java.awt.event.ActionListener() {
@@ -94,14 +99,28 @@ public class mainview extends javax.swing.JFrame {
                 entryActionPerformed(evt);
             }
         });
+        entry.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                entryKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                entryKeyTyped(evt);
+            }
+        });
 
         chatView.setName("chatView"); // NOI18N
 
         sendBtn.setText("send");
+        sendBtn.setFocusCycleRoot(true);
         sendBtn.setName("sendBtn"); // NOI18N
         sendBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 sendBtnActionPerformed(evt);
+            }
+        });
+        sendBtn.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                sendBtnKeyPressed(evt);
             }
         });
 
@@ -250,7 +269,8 @@ public class mainview extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void entryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_entryActionPerformed
-        // TODO add your handling code here:
+
+       
     }//GEN-LAST:event_entryActionPerformed
 
     private void authButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_authButtonActionPerformed
@@ -328,13 +348,28 @@ public class mainview extends javax.swing.JFrame {
     }
     
     private void sendBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendBtnActionPerformed
-        String txtmsg = entry.getText();
-        entry.setText(null);
-        NetworkMessage gmsg = new NetworkMessage(NetworkMessage.NetworkAction.IM,new String[] {username, txtmsg });
-        mainConnect.sendNetworkMsg(gmsg);
-        consoleWrite("Message Sent!");
-        
+     sendMessage();
     }//GEN-LAST:event_sendBtnActionPerformed
+
+    private void sendBtnKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_sendBtnKeyPressed
+        
+    }//GEN-LAST:event_sendBtnKeyPressed
+
+    private void entryKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_entryKeyPressed
+       int charcode = evt.getKeyCode();
+       if (charcode == 10)
+       {sendMessage();}
+    }//GEN-LAST:event_entryKeyPressed
+
+    private void entryKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_entryKeyTyped
+       
+    }//GEN-LAST:event_entryKeyTyped
+
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+       
+    }//GEN-LAST:event_formKeyPressed
+
+
 
     /**
     * @param args the command line arguments
@@ -349,8 +384,18 @@ public class mainview extends javax.swing.JFrame {
         });
     }
 
+    public void sendMessage(){
+        String txtmsg = entry.getText();
+        entry.setText(null);
+        NetworkMessage gmsg = new NetworkMessage(NetworkMessage.NetworkAction.IM,new String[] {username, txtmsg });
+        mainConnect.sendNetworkMsg(gmsg);
+        consoleWrite("Message Sent!");
+        lobbyWrite("You: " + txtmsg);
+    }
+
     private static void build() {
         // marker for initial
+                sendBtn.setEnabled(false);
                 tabs = new String[maxtabs];
                 tabs[0] = "Console";
                 opentabs = 0;

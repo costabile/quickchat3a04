@@ -61,10 +61,10 @@ public class ServerConnection implements Runnable {
     private void processMsg(NetworkMessage nw) {
         switch (nw.getAction()) {
             case IM:
-                NetworkEvent.msgRecieved(nw.getData()[0]);
+                NetworkEvent.msgRecieved(nw.getData()[0],nw.getData()[1]);
                 break;
             case PIM:
-                NetworkEvent.pmsgRecieved(nw.getData()[0], nw.getData()[1]);
+                NetworkEvent.pmsgRecieved(nw.getData()[0], nw.getData()[1],nw.getData()[2]);
                 break;
             case AUTHENTICATED:
                 if (nw.getData()[0].equals("true")) {
