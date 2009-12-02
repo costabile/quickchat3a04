@@ -10,9 +10,9 @@ import common.NetworkMessage;
 public class ServerConnection implements Runnable {
     private Socket mConnection;
      
-    public boolean CON_ALIVE;
+    private boolean CON_ALIVE;
     private boolean SENDING;
-    public boolean AUTHENTICATED;
+    private boolean AUTHENTICATED;
 
    
     private ObjectInputStream in;
@@ -38,7 +38,10 @@ public class ServerConnection implements Runnable {
     while (CON_ALIVE) {
         NetworkMessage nw = recieveNetworkMsg();
         if (nw != null) processMsg(nw);
+
+        CON_ALIVE = mConnection.isConnected();
     }
+    killConnection();
 }
 
     public void sendNetworkMsg(NetworkMessage nw) {
@@ -53,41 +56,39 @@ public class ServerConnection implements Runnable {
         try {
             return (NetworkMessage)in.readObject();
         } catch (Exception e) {
-            killConnection();
             return null;
         }
     }
 
     private void processMsg(NetworkMessage nw) {
         switch (nw.getAction()) {
+            case LOGIN:
+                break;
             case IM:
-                NetworkEvent.msgRecieved(nw.getData()[0]);
+                System.out.println("");
+                System.out.println(nw.getData()[0] + ":" + nw.getData()[1]);
                 break;
             case PIM:
-                NetworkEvent.pmsgRecieved(nw.getData()[0], nw.getData()[1]);
+                System.out.println("");
+                System.out.println(nw.getData()[0] + ":" + nw.getData()[1]);
                 break;
             case AUTHENTICATED:
+                //HACK
+                //System.out.println("authenticated: " + nw.getData()[0]);
                 if (nw.getData()[0].equals("true")) {
                     AUTHENTICATED = true;
                 } else {
                     AUTHENTICATED = false;
                 }
-                NetworkEvent.authenticated(AUTHENTICATED);
-                break;
-            case USER_SIGN_ON:
-                NetworkEvent.signOn(nw.getData()[0]);
-                break;
-            case USER_LIST:
-                NetworkEvent.userlist(nw.getData());
-                break;
             default: break;
         }
     }
     
     private void killConnection() {
-        CON_ALIVE = false;
-        NetworkEvent.connectionlost();
-        try { mConnection.close(); } catch (Exception e) {
+        try {
+        mConnection.close();
+        System.out.println("connection lost.");
+        } catch (Exception e) {
         }
     }
 
