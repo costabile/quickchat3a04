@@ -88,14 +88,14 @@ public class ClientConnection implements Runnable {
     private void authenticateClient(NetworkMessage nw) {
        if (nw.getData()[1].equals(Server.password)) {
            valid = true;
-           user = (String)nw.getData()[0];
+           user = nw.getData()[0];
            System.out.println(String.format("%s has been authenticated.",user));
 
-            /* Let everyone know about the new user
+            // Let everyone know about the new user 
             for (ClientConnection c : Server.connections) {
                 if (c != this) 
-                c.sendNetworkMsg(new NetworkMessage(NetworkMessage.NetworkAction.USER_SIGN_ON, new String {user}));
-            }*/
+                c.sendNetworkMsg(new NetworkMessage(NetworkMessage.NetworkAction.USER_SIGN_ON, new String[] {user}));
+            }
 
        } else {
            valid = false;

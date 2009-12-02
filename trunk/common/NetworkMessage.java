@@ -3,10 +3,10 @@ package common;
 import java.io.Serializable;
 
 public class NetworkMessage implements Serializable {
-    public enum NetworkAction { LOGIN, IM, PIM, AUTHENTICATED, USER_LIST };
+    public enum NetworkAction { LOGIN, IM, PIM, AUTHENTICATED, USER_SIGN_ON, USER_LIST };
 
     private NetworkAction action;
-    private Object[] data;
+    private String[] data;
 
 
     public NetworkMessage(NetworkAction a, String[] d) {
@@ -14,12 +14,7 @@ public class NetworkMessage implements Serializable {
         this.data = d;
     }
 
-    public NetworkMessage(NetworkAction a, Boolean[] d) {
-        this.action = a;
-        this.data = d;
-    }
-
-    public Object[] getData() {
+    public String[] getData() {
         return this.data;
     }
 
