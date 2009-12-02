@@ -3,7 +3,7 @@ package common;
 import java.io.Serializable;
 
 public class NetworkMessage implements Serializable {
-    public enum NetworkAction { LOGIN, IM, PIM, AUTHENTICATED };
+    public enum NetworkAction { LOGIN, IM, PIM, AUTHENTICATED, USER_LIST };
 
     private NetworkAction action;
     private Object[] data;
