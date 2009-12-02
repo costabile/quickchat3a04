@@ -12,6 +12,7 @@ package client;
  */
 public class settingsWindow extends javax.swing.JFrame {
 
+    //make private?
     public clientSettings settings = new clientSettings();
 
     /** Creates new form settingsWindow */

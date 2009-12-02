@@ -13,6 +13,9 @@ public class localFilter {
 
     private static final int DEFAULT_FILTER_LIST_LENGTH = 7;
 
+    //make private?
+    public clientSettings settings = new clientSettings();
+
     public localFilter() {
 
     }
@@ -24,19 +27,19 @@ public class localFilter {
     public String filterMsg(String msg) {
         //TODO: deactivate if user has turned filter off?
         String filteredMsg = msg;
-        //if filter is on..
-        String lowCaseMsg = msg.toLowerCase();
-        int i,j;
-        for (i=0; i<getDefaultFilterListLength(); i++) {
-            if (lowCaseMsg.contains(getDefaultFilterWord(i))) {
-                String replacementStr = "";
-                for (j=0; j<getDefaultFilterWord(i).length(); j++) {
-                    replacementStr = replacementStr + "*";
+        if (settings.isSwearFilterOn()) {       //filter message if swear filter is on
+            String lowCaseMsg = msg.toLowerCase();
+            int i,j;
+            for (i=0; i<getDefaultFilterListLength(); i++) {
+                if (lowCaseMsg.contains(getDefaultFilterWord(i))) {
+                    String replacementStr = "";
+                    for (j=0; j<getDefaultFilterWord(i).length(); j++) {
+                        replacementStr = replacementStr + "*";
+                    }
+                    filteredMsg = filteredMsg.replaceAll("(?i)" + getDefaultFilterWord(i), replacementStr);     //(?i) flag causes case insensitivity
                 }
-                filteredMsg = filteredMsg.replaceAll("(?i)" + getDefaultFilterWord(i), replacementStr);     //(?i) flag causes case insensitivity
             }
-        }
-        //endif
+        }                                       //else just return the unfiltered message
         return filteredMsg;
     }
 
