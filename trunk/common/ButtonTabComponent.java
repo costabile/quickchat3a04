@@ -36,7 +36,7 @@ import javax.swing.*;
 import javax.swing.plaf.basic.BasicButtonUI;
 import java.awt.*;
 import java.awt.event.*;
-
+import client.*;
 /**
  * Component to be used as tabComponent;
  * Contains a JLabel to show the text and
@@ -97,8 +97,29 @@ public class ButtonTabComponent extends JPanel {
         }
 
         public void actionPerformed(ActionEvent e) {
+            JFrame frame = new JFrame("DialogDemo");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
             int i = pane.indexOfTabComponent(ButtonTabComponent.this);
-            if (i != -1) {
+            if (i == 1){
+                Object[] options = {"Ok", "Go Back"};
+                    int n = JOptionPane.showOptionDialog(frame,
+                                    "This will disconnect you from the server, continue?",
+                                    "Close Lobby",
+                                    JOptionPane.YES_NO_OPTION,
+                                    JOptionPane.QUESTION_MESSAGE,
+                                    null,
+                                    options,
+                                    options[0]);
+                    if (n == JOptionPane.YES_OPTION) {
+                         pane.remove(1);
+                         mainview.disconnect();
+
+
+                    }
+
+            }
+            else if (i != -1) {
                 pane.remove(i);
             }
         }
