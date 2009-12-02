@@ -13,7 +13,9 @@ package client;
 import java.io.*;
 import java.net.*;
 import javax.swing.*;
+import java.awt.*;
 import common.NetworkMessage;
+import client.*;
 
 public class loginController {
 
@@ -29,31 +31,42 @@ public class loginController {
 
     public static void main(String args[]) {
     System.out.println("SocketClient initialized");
+    sessionController.main(null);
+    
+    loginWindow.login();
 
 //    l.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //    l.setVisible(true);
     }
     
-
-    public void connect() {
+   public void connect(String pass) {
         try {
-
+        password = pass;
+                
         InetAddress address = InetAddress.getByName(target);
         mConnection = new Socket(target, port);
-
         ServerConnection s = new ServerConnection(mConnection);
-        Thread thread = new Thread((Runnable) s);
-        thread.start();
+        Thread connect = new Thread((Runnable) s);
+        connect.start();
         
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
                 
         NetworkMessage lmsg = new NetworkMessage(NetworkMessage.NetworkAction.LOGIN,new String[] {username, password });
         s.sendNetworkMsg(lmsg);
 
+        loginWindow.loginFrame.setVisible(false);
+
+        sessionController.joinLobby();
+
         }
         catch(Exception e) {
-        System.out.print("Error");
+        System.out.print("Error in connect()");
     }
+    }
+
+    private void connect2server(){
+        
+        
     }
 }
 

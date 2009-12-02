@@ -64,7 +64,7 @@ public class ServerConnection implements Runnable {
                 NetworkEvent.msgRecieved(nw.getData()[0],nw.getData()[1]);
                 break;
             case PIM:
-                NetworkEvent.pmsgRecieved(nw.getData()[0], nw.getData()[1],nw.getData()[2]);
+                NetworkEvent.pmsgRecieved(nw.getData()[0], nw.getData()[1]);
                 break;
             case AUTHENTICATED:
                 if (nw.getData()[0].equals("true")) {

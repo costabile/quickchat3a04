@@ -15,18 +15,18 @@ public class NetworkEvent {
 //        System.out.println(msg);
           //int colour =
           String message = usr + ": " + msg;
-          mainview.lobbyWrite(message);
+          sessionController.lobbyWrite(message);
     }
 
     public static void pmsgRecieved(String usr, String msg) {
 //        System.out.println("");
 //        System.out.println(from + ":" + msg);
-        mainview.lobbyWrite("[Private]" + usr + ": " + msg);
+        sessionController.lobbyWrite("[Private]" + usr + ": " + msg);
     }
 
     public static void signOn(String user) {
         System.out.println("");
-        mainview.lobbyWrite("-> " + user + " has connected.");
+        sessionController.lobbyWrite("-> " + user + " has connected.");
     }
 
     public static void authenticated(boolean auth) {
@@ -47,7 +47,7 @@ public class NetworkEvent {
     }
 
     public static void userlist(String[] list) {
-        mainview.usrlistUpdate(list);
+        sessionController.usrlistUpdate(list);
     }
 
     public static void connectionlost() {
