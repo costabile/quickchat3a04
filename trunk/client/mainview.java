@@ -70,6 +70,8 @@ public class mainview extends javax.swing.JFrame {
         chatView = new javax.swing.JTabbedPane();
         sendBtn = new javax.swing.JButton();
         scrollPane1 = new java.awt.ScrollPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList();
         label1 = new java.awt.Label();
         jLabel1 = new javax.swing.JLabel();
         scrollPane2 = new java.awt.ScrollPane();
@@ -125,6 +127,18 @@ public class mainview extends javax.swing.JFrame {
         });
 
         scrollPane1.setName("scrollPane1"); // NOI18N
+
+        jScrollPane1.setName("jScrollPane1"); // NOI18N
+
+        jList1.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        jList1.setName("jList1"); // NOI18N
+        jScrollPane1.setViewportView(jList1);
+
+        scrollPane1.add(jScrollPane1);
 
         label1.setName("onlinelabel"); // NOI18N
         label1.setText("Online Users");
@@ -274,7 +288,7 @@ public class mainview extends javax.swing.JFrame {
     }//GEN-LAST:event_entryActionPerformed
 
     private void authButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_authButtonActionPerformed
-         loginController login = new loginController();
+         //loginController login = new loginController();
             // get connection data from form
             target = loginIP.getText();
             port = Integer.parseInt(loginPort.getText());
@@ -478,6 +492,10 @@ public class mainview extends javax.swing.JFrame {
 
     }
 
+    public static void usrlistUpdate(String[] list) {
+        jList1.setListData(list);
+    }
+
     protected static JComponent makeTextPanel(String text) {
         JPanel name = new JPanel(false);
         name.setLayout(new GridLayout(1, 1));
@@ -492,6 +510,8 @@ public class mainview extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private static javax.swing.JList jList1;
+    private javax.swing.JScrollPane jScrollPane1;
     private java.awt.Label label1;
     private java.awt.Label label2;
     private java.awt.Label label3;

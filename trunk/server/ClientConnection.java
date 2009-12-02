@@ -52,7 +52,8 @@ public class ClientConnection implements Runnable {
          switch (nw.getAction()) {
                 case LOGIN:
                     authenticateClient(nw);
-                    sendNetworkMsg(new NetworkMessage(NetworkMessage.NetworkAction.AUTHENTICATED,new String[] { "true" })); 
+                    sendNetworkMsg(new NetworkMessage(NetworkMessage.NetworkAction.AUTHENTICATED,new String[] { "true" }));
+                    sndUserList();
                     break;
                 case IM:
                     globalIM(nw); 
@@ -110,6 +111,7 @@ public class ClientConnection implements Runnable {
         CON_ALIVE = false;
         try { 
             Server.connections.remove(Server.connections.indexOf(this));
+            sndUserList();
             mConnection.close(); 
             } catch (Exception e) {}
         System.out.println(user + " connection lost.");
@@ -141,6 +143,19 @@ public class ClientConnection implements Runnable {
                i++;
            }
         sendNetworkMsg(new NetworkMessage(NetworkMessage.NetworkAction.USER_LIST,list)); 
+    }
+
+    private void sndUserList() {
+        String[] list = new String[Server.connections.size()];
+        int i = 0;
+
+        for (ClientConnection c : Server.connections) {
+               list[i] = c.user;
+               i++;
+           }
+        for (ClientConnection c : Server.connections) {
+            c.sendNetworkMsg(new NetworkMessage(NetworkMessage.NetworkAction.USER_LIST,list));
+        }
     }
 
 

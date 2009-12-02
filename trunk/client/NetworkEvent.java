@@ -16,7 +16,7 @@ public class NetworkEvent {
           mainview.lobbyWrite(usr + ": " + msg);
     }
 
-    public static void pmsgRecieved(String usr, String msg, String tar) {
+    public static void pmsgRecieved(String usr, String msg) {
 //        System.out.println("");
 //        System.out.println(from + ":" + msg);
         mainview.lobbyWrite("[Private]" + usr + ": " + msg);
@@ -24,7 +24,7 @@ public class NetworkEvent {
 
     public static void signOn(String user) {
         System.out.println("");
-        System.out.println( user + " connected, say Hello!" );
+        mainview.lobbyWrite(user + " : connected");
     }
 
     public static void authenticated(boolean auth) {
@@ -45,10 +45,7 @@ public class NetworkEvent {
     }
 
     public static void userlist(String[] list) {
-        System.out.println("");
-        System.out.println("online:" + list[0]  + list[1]); 
-        System.out.println("num online:" + Integer.toString(list.length)); 
-        
+        mainview.usrlistUpdate(list);
     }
 
     public static void connectionlost() {
