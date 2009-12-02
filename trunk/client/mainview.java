@@ -34,20 +34,20 @@ public class mainview extends javax.swing.JFrame {
 
     public boolean legit;
 
-
-
+    public static String[] tabs;
+    public static int maxtabs = 10;
+    public static int opentabs = 0;
 
     private static Socket mConnection = null;
     public ServerConnection mainConnect = null;
 
 
-    private Thread main;
+    private static Thread main;
     // UI STUFF
 
     protected static JTextArea consoleArea;
     protected static JTextArea lobbyArea;
     private final static String newline = "\n";
-
 
     /** Creates new form mainview */
     public mainview() {
@@ -170,11 +170,11 @@ public class mainview extends javax.swing.JFrame {
                             .addComponent(chatView, javax.swing.GroupLayout.DEFAULT_SIZE, 709, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(sendBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
                             .addComponent(scrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
                             .addComponent(scrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
                             .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1)
-                            .addComponent(sendBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)))
+                            .addComponent(jLabel1)))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(authButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
@@ -216,9 +216,9 @@ public class mainview extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                         .addComponent(chatView, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(sendBtn)
-                    .addComponent(entry, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(sendBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(entry, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -266,7 +266,7 @@ public class mainview extends javax.swing.JFrame {
             System.out.println("port:" + port);
             System.out.println("pass:" + pass);
             System.out.println("name:" + username);
-
+            System.out.println("name:" + tabs[0]);
             /* Gets form data and creates a new connection with it */
             connect(pass);
 
@@ -296,16 +296,31 @@ public class mainview extends javax.swing.JFrame {
         consoleWrite("Port: " + port);
         consoleWrite("-> Joining Lobby...");
         joinLobby();
+        authButton.setEnabled(false);
+        sendBtn.setEnabled(true);
         }
         catch(Exception e) {
         System.out.print("Error");
+        JFrame frame = new JFrame("DialogDemo");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        JOptionPane.showMessageDialog(frame,
+        "The server did not respond. Please check your settings.",
+        "Connect Failed",
+        JOptionPane.ERROR_MESSAGE);
+
+
     }
     }
 
-    public void disconnect(){
+    public static void disconnect(){
         mConnection = null;
         try{
             main.interrupt();
+            stateLabel.setText("Disconnected");
+            stateLabel.setForeground(Color.red);
+            authButton.setEnabled(true);
+            consoleWrite("Disconnected from server!");
+            sendBtn.setEnabled(false);
         }
         catch(Exception e) {
         System.out.print("Error");
@@ -317,7 +332,7 @@ public class mainview extends javax.swing.JFrame {
         entry.setText(null);
         NetworkMessage gmsg = new NetworkMessage(NetworkMessage.NetworkAction.IM,new String[] {username, txtmsg });
         mainConnect.sendNetworkMsg(gmsg);
-        consoleWrite(txtmsg);
+        consoleWrite("Message Sent!");
         
     }//GEN-LAST:event_sendBtnActionPerformed
 
@@ -336,13 +351,17 @@ public class mainview extends javax.swing.JFrame {
 
     private static void build() {
         // marker for initial
+                tabs = new String[maxtabs];
+                tabs[0] = "Console";
+                opentabs = 0;
+                String title = tabs[0];
                 consoleArea = new JTextArea(5, 20);
                 consoleArea.setEditable(false);
                 Insets insets = new Insets(5,5,5,5);
                 consoleArea.setMargin(insets);
                 JScrollPane consolePane = new JScrollPane(consoleArea);
-                JComponent console = makeTextPanel("Console");
-                chatView.addTab("Console", consolePane);
+                JComponent console = makeTextPanel(title);
+                chatView.addTab(title, consolePane);
                 consolePane.setBackground(Color.white);
                 //chatView.setTabComponentAt(0,
                 // new ButtonTabComponent(chatView));
@@ -358,19 +377,59 @@ public class mainview extends javax.swing.JFrame {
         consoleArea.append(text + newline);
 
     }
+    
+   
+//
+//    private static void buildPane(String pane) {
+//        // marker for initial
+//                tabs[0] = "Console";
+//                consoleArea = new JTextArea(5, 20);
+//                consoleArea.setEditable(false);
+//                Insets insets = new Insets(5,5,5,5);
+//                consoleArea.setMargin(insets);
+//                JScrollPane consolePane = new JScrollPane(consoleArea);
+//                JComponent console = makeTextPanel("Console");
+//                chatView.addTab("Console", consolePane);
+//                consolePane.setBackground(Color.white);
+//                //chatView.setTabComponentAt(0,
+//                // new ButtonTabComponent(chatView));
+//
+//                consoleWrite("Program Initialized...");
+//                consoleWrite("----------------------");
+//
+//
+//    }
+   
+//    private static void paneWrite(int x,String a) {
+//        String text = a;
+//        consoleArea.append(text + newline);
+//
+//    }
+
 
     private static void joinLobby(){
+
+                tabs[1] = "Lobby";
+                opentabs = opentabs + 1;
+                String title = tabs[1];
 
                 lobbyArea = new JTextArea(5, 20);
                 lobbyArea.setEditable(false);
                 Insets insets = new Insets(5,5,5,5);
                 lobbyArea.setMargin(insets);
                 JScrollPane lobbyPane = new JScrollPane(lobbyArea);
-                JComponent lobby = makeTextPanel("Lobby");
-                chatView.addTab("Lobby", lobbyPane);
+                JComponent lobby = makeTextPanel(title);
+                chatView.addTab(title, lobbyPane);
                 lobbyPane.setBackground(Color.white);
                 chatView.setTabComponentAt(1,
                 new ButtonTabComponent(chatView));
+                chatView.setSelectedIndex(1);
+                lobbyWrite("Welcome to the server, please enjoy your stay!");
+    }
+
+    public static void lobbyWrite(String a) {
+        String text = a;
+        lobbyArea.append(text + newline);
 
     }
 
@@ -382,7 +441,7 @@ public class mainview extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton authButton;
+    private static javax.swing.JButton authButton;
     private static javax.swing.JTabbedPane chatView;
     private javax.swing.JTextField entry;
     private javax.swing.JLabel jLabel1;
@@ -399,8 +458,8 @@ public class mainview extends javax.swing.JFrame {
     private javax.swing.JTextField loginPort;
     private java.awt.ScrollPane scrollPane1;
     private java.awt.ScrollPane scrollPane2;
-    private javax.swing.JButton sendBtn;
-    private javax.swing.JLabel stateLabel;
+    private static javax.swing.JButton sendBtn;
+    private static javax.swing.JLabel stateLabel;
     // End of variables declaration//GEN-END:variables
 
 }

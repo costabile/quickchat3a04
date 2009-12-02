@@ -1,10 +1,12 @@
 package client;
-
+import client.*;
+import common.*;
 public class NetworkEvent {
     
     public static void msgRecieved(String msg) {
-        System.out.println("");
-        System.out.println(msg);
+//        System.out.println("");
+//        System.out.println(msg);
+        mainview.lobbyWrite(msg);
     }
 
     public static void pmsgRecieved(String from, String msg) {
