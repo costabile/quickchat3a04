@@ -53,7 +53,7 @@ public class ClientConnection implements Runnable {
                 case LOGIN:
                     authenticateClient(nw);
                     sendNetworkMsg(new NetworkMessage(NetworkMessage.NetworkAction.AUTHENTICATED,new String[] { "true" }));
-                    sndUserList();
+                    //sndUserList();
                     break;
                 case IM:
                     globalIM(nw); 
