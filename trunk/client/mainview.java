@@ -41,7 +41,7 @@ public class mainview extends javax.swing.JFrame {
     public ServerConnection mainConnect = null;
 
 
-
+    private Thread main;
     // UI STUFF
 
     protected static JTextArea consoleArea;
@@ -279,8 +279,8 @@ public class mainview extends javax.swing.JFrame {
         mConnection = new Socket(target, port);
 
         mainConnect = new ServerConnection(mConnection);
-        Thread thread = new Thread((Runnable) mainConnect);
-        thread.start();
+        main = new Thread((Runnable) mainConnect);
+        main.start();
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
@@ -296,6 +296,16 @@ public class mainview extends javax.swing.JFrame {
         consoleWrite("Port: " + port);
         consoleWrite("-> Joining Lobby...");
         joinLobby();
+        }
+        catch(Exception e) {
+        System.out.print("Error");
+    }
+    }
+
+    public void disconnect(){
+        mConnection = null;
+        try{
+            main.interrupt();
         }
         catch(Exception e) {
         System.out.print("Error");
