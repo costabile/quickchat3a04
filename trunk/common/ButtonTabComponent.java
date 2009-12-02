@@ -113,7 +113,7 @@ public class ButtonTabComponent extends JPanel {
                                     options[0]);
                     if (n == JOptionPane.YES_OPTION) {
                          pane.remove(1);
-                         mainview.disconnect();
+                         sessionController.disconnect();
 
 
                     }
