@@ -74,6 +74,7 @@ public class loginWindow extends javax.swing.JFrame {
         openMenuItem = new javax.swing.JMenuItem();
         saveMenuItem = new javax.swing.JMenuItem();
         saveAsMenuItem = new javax.swing.JMenuItem();
+        settingsMenuItem = new javax.swing.JMenuItem();
         exitMenuItem = new javax.swing.JMenuItem();
         helpMenu = new javax.swing.JMenu();
         contentsMenuItem = new javax.swing.JMenuItem();
@@ -199,6 +200,14 @@ public class loginWindow extends javax.swing.JFrame {
         saveAsMenuItem.setText("Save As ...");
         fileMenu.add(saveAsMenuItem);
 
+        settingsMenuItem.setText("Settings...");
+        settingsMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                settingsMenuItemActionPerformed(evt);
+            }
+        });
+        fileMenu.add(settingsMenuItem);
+
         exitMenuItem.setText("Exit");
         exitMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -242,7 +251,7 @@ public class loginWindow extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtName, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
+                            .addComponent(txtName, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(txtPassword, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(txtPort, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE))))
@@ -307,6 +316,13 @@ public class loginWindow extends javax.swing.JFrame {
        //QuickChatprojApp.getApplication().show(aboutBox);
     }//GEN-LAST:event_aboutMenuItemActionPerformed
 
+    private void settingsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsMenuItemActionPerformed
+        if (settingsBox == null) {
+            settingsBox = new settingsWindow();
+        }
+        settingsBox.setVisible(true);
+    }//GEN-LAST:event_settingsMenuItemActionPerformed
+
     /**
     * @param args the command line arguments
     */
@@ -343,6 +359,7 @@ public class loginWindow extends javax.swing.JFrame {
     private javax.swing.JMenuItem saveAsMenuItem;
     private javax.swing.JMenuItem saveMenuItem;
     private javax.swing.JButton sendChatButton;
+    private javax.swing.JMenuItem settingsMenuItem;
     private javax.swing.JLabel statusMessageLabel;
     private javax.swing.JPanel statusPanel;
     public javax.swing.JTextField txtAddress;
@@ -353,4 +370,5 @@ public class loginWindow extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private JDialog aboutBox;
+    private JFrame settingsBox;
 }

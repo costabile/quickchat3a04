@@ -204,6 +204,14 @@
                 <Property name="text" type="java.lang.String" value="Save As ..."/>
               </Properties>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="settingsMenuItem">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Settings..."/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="settingsMenuItemActionPerformed"/>
+              </Events>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="exitMenuItem">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Exit"/>
@@ -273,7 +281,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="txtAddress" alignment="0" min="-2" pref="192" max="-2" attributes="0"/>
-                          <Component id="txtName" alignment="0" pref="192" max="32767" attributes="0"/>
+                          <Component id="txtName" alignment="0" pref="217" max="32767" attributes="0"/>
                           <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
                               <Component id="txtPassword" alignment="0" max="32767" attributes="1"/>
                               <Component id="txtPort" alignment="0" pref="70" max="32767" attributes="1"/>

@@ -12,20 +12,18 @@ package client;
  */
 public class settingsWindow extends javax.swing.JFrame {
 
-    public clientSettings settings;
+    public clientSettings settings = new clientSettings();
 
     /** Creates new form settingsWindow */
     public settingsWindow() {
         initComponents();
-
-        settings = new clientSettings();
-
+        //settings = new clientSettings();
 
         //initialize controls to current setting states
 
         //swear filter
-        if (settings.isSwearFilterOn() == true) rb_swearFilterOn.setEnabled(true);
-        else if (settings.isSwearFilterOn() == false) rb_swearFilterOff.setEnabled(true);
+        if (settings.isSwearFilterOn() == true) rb_swearFilterOn.setSelected(true);
+        else if (settings.isSwearFilterOn() == false) rb_swearFilterOff.setSelected(true);
 
     }
 
@@ -123,8 +121,8 @@ public class settingsWindow extends javax.swing.JFrame {
         //OK - save settings
 
         //swear filter
-        if (rb_swearFilterOn.isEnabled()) settings.setSwearFilterOn(true);
-        else if (rb_swearFilterOff.isEnabled()) settings.setSwearFilterOn(false);
+        if (rb_swearFilterOn.isSelected()) settings.setSwearFilterOn(true);
+        else if (rb_swearFilterOff.isSelected()) settings.setSwearFilterOn(false);
 
         dispose();
     }//GEN-LAST:event_btn_okActionPerformed
