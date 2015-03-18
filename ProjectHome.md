@@ -1,0 +1,1 @@
+Project is for a chat client that is being made for a software engineering class. There will be no support and no further code done after submission.
